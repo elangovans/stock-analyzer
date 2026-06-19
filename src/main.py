@@ -52,7 +52,7 @@ def run(portfolio_path: str) -> None:
     print(f"      {len(analysis.stock_exposures)} unique stocks tracked")
 
     print("\n[4/4] Writing reports")
-    json_path, html_path = write_reports(analysis)
+    json_path, html_path = write_reports(analysis, portfolio_path)
     print(f"      {json_path}")
     print(f"      {html_path}")
 

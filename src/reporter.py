@@ -8,6 +8,13 @@ from .models import PortfolioAnalysis
 OUTPUT_DIR = Path(__file__).parent.parent / "output"
 
 
+def _output_paths(input_path: str, timestamp: str) -> tuple[Path, Path]:
+    stem = Path(input_path).stem
+    name = f"{stem}_{timestamp}"
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    return OUTPUT_DIR / f"{name}.json", OUTPUT_DIR / f"{name}.html"
+
+
 def _decimal_default(obj: Any) -> Any:
     if isinstance(obj, Decimal):
         return float(obj)
@@ -153,11 +160,9 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
 </html>"""
 
 
-def write_reports(analysis: PortfolioAnalysis) -> tuple[Path, Path]:
-    OUTPUT_DIR.mkdir(exist_ok=True)
-
-    json_path = OUTPUT_DIR / "report.json"
-    html_path = OUTPUT_DIR / "report.html"
+def write_reports(analysis: PortfolioAnalysis, input_path: str) -> tuple[Path, Path]:
+    timestamp = analysis.analysis_timestamp.strftime("%Y%m%d_%H%M%S")
+    json_path, html_path = _output_paths(input_path, timestamp)
 
     json_path.write_text(
         json.dumps(_build_json(analysis), indent=2, default=_decimal_default)
