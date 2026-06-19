@@ -7,7 +7,7 @@ from typing import List, Literal, Optional
 @dataclass
 class PortfolioItem:
     ticker: str
-    type: Literal["ETF", "MF", "STOCK"]
+    type: Literal["ETF", "MF", "STOCK", "CASH"]
     quantity: Decimal
     current_price: Decimal
 

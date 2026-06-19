@@ -24,8 +24,8 @@ def _build_item(raw: dict) -> PortfolioItem:
         raise ValidationError("Ticker is required")
 
     item_type = str(raw.get("type", "")).strip().upper()
-    if item_type not in ("ETF", "MF", "STOCK"):
-        raise ValidationError(f"Invalid type '{item_type}' for {ticker}. Must be ETF, MF, or STOCK")
+    if item_type not in ("ETF", "MF", "STOCK", "CASH"):
+        raise ValidationError(f"Invalid type '{item_type}' for {ticker}. Must be ETF, MF, or STOCK or CASH" )
 
     quantity = _parse_decimal(raw.get("quantity"), "quantity", ticker)
     if quantity <= 0:
@@ -54,9 +54,9 @@ def validate_portfolio(items: list) -> List[PortfolioItem]:
     portfolio = [_build_item(r) for r in items]
 
     tickers = [p.ticker for p in portfolio]
-    if len(tickers) != len(set(tickers)):
-        dupes = [t for t in tickers if tickers.count(t) > 1]
-        raise ValidationError(f"Duplicate tickers found: {set(dupes)}")
+    #if len(tickers) != len(set(tickers)):
+        #dupes = [t for t in tickers if tickers.count(t) > 1]
+        #raise ValidationError(f"Duplicate tickers found: {set(dupes)}")
 
     return portfolio
 
