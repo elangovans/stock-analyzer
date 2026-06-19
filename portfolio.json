@@ -4,6 +4,8 @@
     {"ticker": "QQQ", "type": "ETF", "quantity": 200, "current_price": 740.62},
     {"ticker": "SCHD", "type": "ETF", "quantity": 2000, "current_price": 31.86},
     {"ticker": "NVDA", "type": "STOCK", "quantity": 50, "current_price": 216.69},
-    {"ticker": "FXAIX", "type": "MF", "quantity": 200, "current_price": 261.21}
+    {"ticker": "FXAIX", "type": "MF", "quantity": 200, "current_price": 261.21},
+        {"ticker": "SMH", "type": "ETF", "quantity": 200, "current_price": 659.88},
+    {"ticker": "VTSNX", "type": "MF", "quantity":200, "current_price": 186.39}
   ]
 }
