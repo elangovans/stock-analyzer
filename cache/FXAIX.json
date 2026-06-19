@@ -1,0 +1,106 @@
+{
+  "ticker": "FXAIX",
+  "cached_at": "2026-06-19T10:53:06.795457",
+  "holdings": [
+    {
+      "ticker": "NVDA",
+      "weight": "7.85"
+    },
+    {
+      "ticker": "AAPL",
+      "weight": "6.45"
+    },
+    {
+      "ticker": "MSFT",
+      "weight": "4.90"
+    },
+    {
+      "ticker": "AMZN",
+      "weight": "4.19"
+    },
+    {
+      "ticker": "GOOGL",
+      "weight": "3.63"
+    },
+    {
+      "ticker": "AVGO",
+      "weight": "3.20"
+    },
+    {
+      "ticker": "GOOG",
+      "weight": "2.89"
+    },
+    {
+      "ticker": "META",
+      "weight": "2.17"
+    },
+    {
+      "ticker": "TSLA",
+      "weight": "1.74"
+    },
+    {
+      "ticker": "BRK.B",
+      "weight": "1.41"
+    },
+    {
+      "ticker": "JPM",
+      "weight": "1.37"
+    },
+    {
+      "ticker": "LLY",
+      "weight": "1.20"
+    },
+    {
+      "ticker": "XOM",
+      "weight": "1.04"
+    },
+    {
+      "ticker": "MU",
+      "weight": "0.94"
+    },
+    {
+      "ticker": "WMT",
+      "weight": "0.94"
+    },
+    {
+      "ticker": "AMD",
+      "weight": "0.94"
+    },
+    {
+      "ticker": "V",
+      "weight": "0.90"
+    },
+    {
+      "ticker": "JNJ",
+      "weight": "0.90"
+    },
+    {
+      "ticker": "COST",
+      "weight": "0.73"
+    },
+    {
+      "ticker": "INTC",
+      "weight": "0.72"
+    },
+    {
+      "ticker": "CAT",
+      "weight": "0.67"
+    },
+    {
+      "ticker": "MA",
+      "weight": "0.66"
+    },
+    {
+      "ticker": "NFLX",
+      "weight": "0.64"
+    },
+    {
+      "ticker": "ABBV",
+      "weight": "0.60"
+    },
+    {
+      "ticker": "CVX",
+      "weight": "0.59"
+    }
+  ]
+}

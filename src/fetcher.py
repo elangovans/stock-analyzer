@@ -69,7 +69,7 @@ def _scrape_stockanalysis(ticker: str) -> List[dict]:
 
     # Try mutual fund path if ETF path fails
     if resp.status_code == 404:
-        url = f"https://stockanalysis.com/funds/{ticker.lower()}/holdings/"
+        url = f"https://stockanalysis.com/quote/mutf/{ticker.lower()}/holdings/"
         resp = requests.get(url, headers=HEADERS, timeout=15)
 
     if resp.status_code != 200:

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Stock Exposure Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f7fa; color: #1a1a2e; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+  .summary-cards { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .card { background: #fff; border-radius: 10px; padding: 18px 24px; flex: 1; min-width: 180px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .card-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 6px; }
+  .card-value { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; }
+  .card-value.green { color: #16a34a; }
+  .warnings { background: #fff3cd; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem; }
+  .warnings ul { margin-top: 6px; padding-left: 16px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  thead { background: #1a1a2e; color: #fff; }
+  th { padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  td { padding: 11px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.875rem; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f9fafb; }
+  .rank { color: #aaa; font-size: 0.8rem; width: 40px; }
+  .ticker { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+  .value { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+  .pct { color: #2563eb; font-weight: 600; white-space: nowrap; }
+  .sources { color: #555; font-size: 0.82rem; line-height: 1.8; }
+  .src-tag { background: #e8f0fe; color: #1d4ed8; border-radius: 4px; padding: 1px 6px; font-weight: 600; font-size: 0.78rem; }
+  .weight { color: #aaa; }
+  .badge-direct { background: #dcfce7; color: #15803d; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 700; vertical-align: middle; margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Portfolio Stock Exposure Report</h1>
+  <p class="subtitle">Generated 2026-06-19 10:33:56 &mdash; Top 25 holdings per fund</p>
+  
+  <div class="summary-cards">
+    <div class="card">
+      <div class="card-label">Portfolio Total</div>
+      <div class="card-value">$360,300.50</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Tracked Exposure</div>
+      <div class="card-value">$241,098.24</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Coverage</div>
+      <div class="card-value">66.9%</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Unique Stocks Tracked</div>
+      <div class="card-value">57</div>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Stock</th>
+        <th>Total Exposure</th>
+        <th>% Portfolio</th>
+        <th>Sources (Fund → Weight → Exposure)</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+            <td class="rank">1</td>
+            <td class="ticker">NVDA <span class='badge-direct'>DIRECT</span></td>
+            <td class="value">$33,705.73</td>
+            <td class="pct">9.35%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $10,858.38 <span class='weight'>(7.89%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $12,012.86 <span class='weight'>(8.11%)</span> &nbsp;|&nbsp; <span class='src-tag'>NVDA</span> $10,834.50 <span class='weight'>(100.00%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">2</td>
+            <td class="ticker">AAPL </td>
+            <td class="value">$19,953.58</td>
+            <td class="pct">5.54%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $9,688.59 <span class='weight'>(7.04%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $10,264.99 <span class='weight'>(6.93%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">3</td>
+            <td class="ticker">MSFT </td>
+            <td class="value">$13,680.10</td>
+            <td class="pct">3.80%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $7,073.77 <span class='weight'>(5.14%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $6,606.33 <span class='weight'>(4.46%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">4</td>
+            <td class="ticker">AMZN </td>
+            <td class="value">$11,749.41</td>
+            <td class="pct">3.26%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $5,587.45 <span class='weight'>(4.06%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $6,161.96 <span class='weight'>(4.16%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">5</td>
+            <td class="ticker">MU </td>
+            <td class="value">$10,577.37</td>
+            <td class="pct">2.94%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $2,312.05 <span class='weight'>(1.68%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $8,265.32 <span class='weight'>(5.58%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">6</td>
+            <td class="ticker">GOOGL </td>
+            <td class="value">$9,700.55</td>
+            <td class="pct">2.69%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $4,679.15 <span class='weight'>(3.40%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $5,021.40 <span class='weight'>(3.39%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">7</td>
+            <td class="ticker">AVGO </td>
+            <td class="value">$9,063.51</td>
+            <td class="pct">2.52%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $4,486.48 <span class='weight'>(3.26%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $4,577.03 <span class='weight'>(3.09%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">8</td>
+            <td class="ticker">GOOG </td>
+            <td class="value">$8,425.09</td>
+            <td class="pct">2.34%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $3,729.56 <span class='weight'>(2.71%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $4,695.53 <span class='weight'>(3.17%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">9</td>
+            <td class="ticker">AMD </td>
+            <td class="value">$7,448.47</td>
+            <td class="pct">2.07%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,775.32 <span class='weight'>(1.29%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $5,673.15 <span class='weight'>(3.83%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">10</td>
+            <td class="ticker">TSLA </td>
+            <td class="value">$7,282.82</td>
+            <td class="pct">2.02%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $2,587.29 <span class='weight'>(1.88%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $4,695.53 <span class='weight'>(3.17%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">11</td>
+            <td class="ticker">META </td>
+            <td class="value">$6,930.70</td>
+            <td class="pct">1.92%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $2,931.35 <span class='weight'>(2.13%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $3,999.35 <span class='weight'>(2.70%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">12</td>
+            <td class="ticker">TXN </td>
+            <td class="value">$5,680.96</td>
+            <td class="pct">1.58%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $1,895.99 <span class='weight'>(1.28%)</span> &nbsp;|&nbsp; <span class='src-tag'>SCHD</span> $3,784.97 <span class='weight'>(5.94%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">13</td>
+            <td class="ticker">INTC </td>
+            <td class="value">$5,482.30</td>
+            <td class="pct">1.52%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,142.26 <span class='weight'>(0.83%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $4,340.03 <span class='weight'>(2.93%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">14</td>
+            <td class="ticker">QCOM </td>
+            <td class="value">$5,263.81</td>
+            <td class="pct">1.46%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $1,555.30 <span class='weight'>(1.05%)</span> &nbsp;|&nbsp; <span class='src-tag'>SCHD</span> $3,708.50 <span class='weight'>(5.82%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">15</td>
+            <td class="ticker">WMT </td>
+            <td class="value">$4,776.55</td>
+            <td class="pct">1.33%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,073.45 <span class='weight'>(0.78%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $3,703.10 <span class='weight'>(2.50%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">16</td>
+            <td class="ticker">CSCO </td>
+            <td class="value">$4,056.00</td>
+            <td class="pct">1.13%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,004.64 <span class='weight'>(0.73%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $3,051.35 <span class='weight'>(2.06%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">17</td>
+            <td class="ticker">LRCX </td>
+            <td class="value">$3,979.72</td>
+            <td class="pct">1.10%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $839.49 <span class='weight'>(0.61%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $3,140.23 <span class='weight'>(2.12%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">18</td>
+            <td class="ticker">COST </td>
+            <td class="value">$3,634.84</td>
+            <td class="pct">1.01%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $894.54 <span class='weight'>(0.65%)</span> &nbsp;|&nbsp; <span class='src-tag'>QQQ</span> $2,740.29 <span class='weight'>(1.85%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">19</td>
+            <td class="ticker">UNH </td>
+            <td class="value">$3,472.74</td>
+            <td class="pct">0.96%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $3,472.74 <span class='weight'>(5.45%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">20</td>
+            <td class="ticker">AMAT </td>
+            <td class="value">$3,169.85</td>
+            <td class="pct">0.88%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $3,169.85 <span class='weight'>(2.14%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">21</td>
+            <td class="ticker">KO </td>
+            <td class="value">$2,599.78</td>
+            <td class="pct">0.72%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,599.78 <span class='weight'>(4.08%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">22</td>
+            <td class="ticker">MRK </td>
+            <td class="value">$2,434.10</td>
+            <td class="pct">0.68%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,434.10 <span class='weight'>(3.82%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">23</td>
+            <td class="ticker">CVX </td>
+            <td class="value">$2,421.36</td>
+            <td class="pct">0.67%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,421.36 <span class='weight'>(3.80%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">24</td>
+            <td class="ticker">PG </td>
+            <td class="value">$2,414.99</td>
+            <td class="pct">0.67%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,414.99 <span class='weight'>(3.79%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">25</td>
+            <td class="ticker">AMGN </td>
+            <td class="value">$2,287.55</td>
+            <td class="pct">0.63%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,287.55 <span class='weight'>(3.59%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">26</td>
+            <td class="ticker">VZ </td>
+            <td class="value">$2,274.80</td>
+            <td class="pct">0.63%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,274.80 <span class='weight'>(3.57%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">27</td>
+            <td class="ticker">HD </td>
+            <td class="value">$2,249.32</td>
+            <td class="pct">0.62%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,249.32 <span class='weight'>(3.53%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">28</td>
+            <td class="ticker">COP </td>
+            <td class="value">$2,223.83</td>
+            <td class="pct">0.62%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,223.83 <span class='weight'>(3.49%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">29</td>
+            <td class="ticker">KLAC </td>
+            <td class="value">$2,207.05</td>
+            <td class="pct">0.61%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $2,207.05 <span class='weight'>(1.49%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">30</td>
+            <td class="ticker">PEP </td>
+            <td class="value">$2,191.97</td>
+            <td class="pct">0.61%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $2,191.97 <span class='weight'>(3.44%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">31</td>
+            <td class="ticker">NFLX </td>
+            <td class="value">$2,118.17</td>
+            <td class="pct">0.59%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $2,118.17 <span class='weight'>(1.43%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">32</td>
+            <td class="ticker">SNDK </td>
+            <td class="value">$2,088.55</td>
+            <td class="pct">0.58%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $2,088.55 <span class='weight'>(1.41%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">33</td>
+            <td class="ticker">ABT </td>
+            <td class="value">$1,988.06</td>
+            <td class="pct">0.55%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,988.06 <span class='weight'>(3.12%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">34</td>
+            <td class="ticker">PLTR </td>
+            <td class="value">$1,910.80</td>
+            <td class="pct">0.53%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $1,910.80 <span class='weight'>(1.29%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">35</td>
+            <td class="ticker">MO </td>
+            <td class="value">$1,892.48</td>
+            <td class="pct">0.53%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,892.48 <span class='weight'>(2.97%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">36</td>
+            <td class="ticker">LLY </td>
+            <td class="value">$1,857.90</td>
+            <td class="pct">0.52%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,857.90 <span class='weight'>(1.35%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">37</td>
+            <td class="ticker">BRK.B </td>
+            <td class="value">$1,844.13</td>
+            <td class="pct">0.51%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,844.13 <span class='weight'>(1.34%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">38</td>
+            <td class="ticker">BMY </td>
+            <td class="value">$1,835.14</td>
+            <td class="pct">0.51%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,835.14 <span class='weight'>(2.88%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">39</td>
+            <td class="ticker">LMT </td>
+            <td class="value">$1,758.67</td>
+            <td class="pct">0.49%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,758.67 <span class='weight'>(2.76%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">40</td>
+            <td class="ticker">MRVL </td>
+            <td class="value">$1,747.86</td>
+            <td class="pct">0.49%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $1,747.86 <span class='weight'>(1.18%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">41</td>
+            <td class="ticker">WDC </td>
+            <td class="value">$1,644.18</td>
+            <td class="pct">0.46%</td>
+            <td class="sources"><span class='src-tag'>QQQ</span> $1,644.18 <span class='weight'>(1.11%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">42</td>
+            <td class="ticker">JPM </td>
+            <td class="value">$1,596.42</td>
+            <td class="pct">0.44%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,596.42 <span class='weight'>(1.16%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">43</td>
+            <td class="ticker">ACN </td>
+            <td class="value">$1,567.51</td>
+            <td class="pct">0.44%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,567.51 <span class='weight'>(2.46%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">44</td>
+            <td class="ticker">BX </td>
+            <td class="value">$1,529.28</td>
+            <td class="pct">0.42%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,529.28 <span class='weight'>(2.40%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">45</td>
+            <td class="ticker">ADP </td>
+            <td class="value">$1,440.07</td>
+            <td class="pct">0.40%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,440.07 <span class='weight'>(2.26%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">46</td>
+            <td class="ticker">CMCSA </td>
+            <td class="value">$1,331.75</td>
+            <td class="pct">0.37%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,331.75 <span class='weight'>(2.09%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">47</td>
+            <td class="ticker">XOM </td>
+            <td class="value">$1,279.88</td>
+            <td class="pct">0.36%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,279.88 <span class='weight'>(0.93%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">48</td>
+            <td class="ticker">UPS </td>
+            <td class="value">$1,268.03</td>
+            <td class="pct">0.35%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,268.03 <span class='weight'>(1.99%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">49</td>
+            <td class="ticker">SLB </td>
+            <td class="value">$1,229.80</td>
+            <td class="pct">0.34%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,229.80 <span class='weight'>(1.93%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">50</td>
+            <td class="ticker">EOG </td>
+            <td class="value">$1,178.82</td>
+            <td class="pct">0.33%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $1,178.82 <span class='weight'>(1.85%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">51</td>
+            <td class="ticker">JNJ </td>
+            <td class="value">$1,142.26</td>
+            <td class="pct">0.32%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,142.26 <span class='weight'>(0.83%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">52</td>
+            <td class="ticker">V </td>
+            <td class="value">$1,142.26</td>
+            <td class="pct">0.32%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $1,142.26 <span class='weight'>(0.83%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">53</td>
+            <td class="ticker">TGT </td>
+            <td class="value">$943.06</td>
+            <td class="pct">0.26%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $943.06 <span class='weight'>(1.48%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">54</td>
+            <td class="ticker">F </td>
+            <td class="value">$892.08</td>
+            <td class="pct">0.25%</td>
+            <td class="sources"><span class='src-tag'>SCHD</span> $892.08 <span class='weight'>(1.40%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">55</td>
+            <td class="ticker">CAT </td>
+            <td class="value">$867.02</td>
+            <td class="pct">0.24%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $867.02 <span class='weight'>(0.63%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">56</td>
+            <td class="ticker">MA </td>
+            <td class="value">$853.26</td>
+            <td class="pct">0.24%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $853.26 <span class='weight'>(0.62%)</span></td>
+        </tr>
+
+        <tr>
+            <td class="rank">57</td>
+            <td class="ticker">ABBV </td>
+            <td class="value">$811.97</td>
+            <td class="pct">0.23%</td>
+            <td class="sources"><span class='src-tag'>VOO</span> $811.97 <span class='weight'>(0.59%)</span></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

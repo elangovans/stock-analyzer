@@ -1,8 +1,9 @@
 {
   "portfolio": [
-    {"ticker": "VOO", "type": "ETF", "quantity": 200, "current_price": 686.19},
-    {"ticker": "QQQ", "type": "ETF", "quantity": 200, "current_price": 739.36},
-    {"ticker": "SCHD", "type": "ETF", "quantity": 2000, "current_price": 31.93},
-    {"ticker": "NVDA", "type": "STOCK", "quantity": 50, "current_price": 125.45}
+    {"ticker": "VOO", "type": "ETF", "quantity": 200, "current_price": 688.11},
+    {"ticker": "QQQ", "type": "ETF", "quantity": 200, "current_price": 740.62},
+    {"ticker": "SCHD", "type": "ETF", "quantity": 2000, "current_price": 31.86},
+    {"ticker": "NVDA", "type": "STOCK", "quantity": 50, "current_price": 216.69},
+    {"ticker": "FXAIX", "type": "MF", "quantity": 200, "current_price": 261.21}
   ]
 }
