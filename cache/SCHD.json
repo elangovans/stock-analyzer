@@ -1,0 +1,106 @@
+{
+  "ticker": "SCHD",
+  "cached_at": "2026-06-19T08:38:16.106214",
+  "holdings": [
+    {
+      "ticker": "TXN",
+      "weight": "5.94"
+    },
+    {
+      "ticker": "QCOM",
+      "weight": "5.82"
+    },
+    {
+      "ticker": "UNH",
+      "weight": "5.45"
+    },
+    {
+      "ticker": "KO",
+      "weight": "4.08"
+    },
+    {
+      "ticker": "MRK",
+      "weight": "3.82"
+    },
+    {
+      "ticker": "CVX",
+      "weight": "3.80"
+    },
+    {
+      "ticker": "PG",
+      "weight": "3.79"
+    },
+    {
+      "ticker": "AMGN",
+      "weight": "3.59"
+    },
+    {
+      "ticker": "VZ",
+      "weight": "3.57"
+    },
+    {
+      "ticker": "HD",
+      "weight": "3.53"
+    },
+    {
+      "ticker": "COP",
+      "weight": "3.49"
+    },
+    {
+      "ticker": "PEP",
+      "weight": "3.44"
+    },
+    {
+      "ticker": "ABT",
+      "weight": "3.12"
+    },
+    {
+      "ticker": "MO",
+      "weight": "2.97"
+    },
+    {
+      "ticker": "BMY",
+      "weight": "2.88"
+    },
+    {
+      "ticker": "LMT",
+      "weight": "2.76"
+    },
+    {
+      "ticker": "ACN",
+      "weight": "2.46"
+    },
+    {
+      "ticker": "BX",
+      "weight": "2.40"
+    },
+    {
+      "ticker": "ADP",
+      "weight": "2.26"
+    },
+    {
+      "ticker": "CMCSA",
+      "weight": "2.09"
+    },
+    {
+      "ticker": "UPS",
+      "weight": "1.99"
+    },
+    {
+      "ticker": "SLB",
+      "weight": "1.93"
+    },
+    {
+      "ticker": "EOG",
+      "weight": "1.85"
+    },
+    {
+      "ticker": "TGT",
+      "weight": "1.48"
+    },
+    {
+      "ticker": "F",
+      "weight": "1.40"
+    }
+  ]
+}

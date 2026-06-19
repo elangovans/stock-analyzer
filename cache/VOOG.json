@@ -1,0 +1,106 @@
+{
+  "ticker": "VOOG",
+  "cached_at": "2026-06-19T08:52:18.545493",
+  "holdings": [
+    {
+      "ticker": "NVDA",
+      "weight": "14.25"
+    },
+    {
+      "ticker": "MSFT",
+      "weight": "9.29"
+    },
+    {
+      "ticker": "AAPL",
+      "weight": "6.36"
+    },
+    {
+      "ticker": "GOOGL",
+      "weight": "6.15"
+    },
+    {
+      "ticker": "AVGO",
+      "weight": "5.88"
+    },
+    {
+      "ticker": "GOOG",
+      "weight": "4.89"
+    },
+    {
+      "ticker": "AMZN",
+      "weight": "3.89"
+    },
+    {
+      "ticker": "META",
+      "weight": "3.84"
+    },
+    {
+      "ticker": "MU",
+      "weight": "3.04"
+    },
+    {
+      "ticker": "LLY",
+      "weight": "2.43"
+    },
+    {
+      "ticker": "BRK.B",
+      "weight": "2.42"
+    },
+    {
+      "ticker": "AMD",
+      "weight": "2.34"
+    },
+    {
+      "ticker": "TSLA",
+      "weight": "2.11"
+    },
+    {
+      "ticker": "JPM",
+      "weight": "1.43"
+    },
+    {
+      "ticker": "CAT",
+      "weight": "1.13"
+    },
+    {
+      "ticker": "LRCX",
+      "weight": "1.10"
+    },
+    {
+      "ticker": "NFLX",
+      "weight": "1.01"
+    },
+    {
+      "ticker": "PLTR",
+      "weight": "0.99"
+    },
+    {
+      "ticker": "AMAT",
+      "weight": "0.99"
+    },
+    {
+      "ticker": "JNJ",
+      "weight": "0.89"
+    },
+    {
+      "ticker": "V",
+      "weight": "0.84"
+    },
+    {
+      "ticker": "MA",
+      "weight": "0.75"
+    },
+    {
+      "ticker": "GEV",
+      "weight": "0.72"
+    },
+    {
+      "ticker": "CSCO",
+      "weight": "0.70"
+    },
+    {
+      "ticker": "KLAC",
+      "weight": "0.70"
+    }
+  ]
+}

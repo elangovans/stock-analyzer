@@ -1,0 +1,856 @@
+{
+  "portfolio_summary": {
+    "total_value": 179242.302585,
+    "analysis_date": "2026-06-19 08:52:18",
+    "stock_count": 51,
+    "validation": "PASSED",
+    "total_tracked_exposure": 125808.390889,
+    "warnings": []
+  },
+  "stock_exposures": [
+    {
+      "rank": 1,
+      "stock_ticker": "COST",
+      "total_exposure_value": 23850.282585,
+      "percent_of_portfolio": 13.31,
+      "is_direct_holding": true,
+      "sources": [
+        {
+          "fund_ticker": "COST",
+          "fund_type": "STOCK",
+          "fund_position_value": 23850.282585,
+          "stock_weight_in_fund": 100.0,
+          "stock_exposure_from_fund": 23850.282585
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "stock_ticker": "GOOG",
+      "total_exposure_value": 20560.6393,
+      "percent_of_portfolio": 11.47,
+      "is_direct_holding": true,
+      "sources": [
+        {
+          "fund_ticker": "GOOG",
+          "fund_type": "STOCK",
+          "fund_position_value": 18373.0,
+          "stock_weight_in_fund": 100.0,
+          "stock_exposure_from_fund": 18373.0
+        },
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 4.89,
+          "stock_exposure_from_fund": 2187.6393
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "stock_ticker": "AMZN",
+      "total_exposure_value": 18847.5693,
+      "percent_of_portfolio": 10.52,
+      "is_direct_holding": true,
+      "sources": [
+        {
+          "fund_ticker": "AMZN",
+          "fund_type": "STOCK",
+          "fund_position_value": 17107.3,
+          "stock_weight_in_fund": 100.0,
+          "stock_exposure_from_fund": 17107.3
+        },
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 3.89,
+          "stock_exposure_from_fund": 1740.2693
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "stock_ticker": "LLY",
+      "total_exposure_value": 12072.8091,
+      "percent_of_portfolio": 6.74,
+      "is_direct_holding": true,
+      "sources": [
+        {
+          "fund_ticker": "LLY",
+          "fund_type": "STOCK",
+          "fund_position_value": 10985.7,
+          "stock_weight_in_fund": 100.0,
+          "stock_exposure_from_fund": 10985.7
+        },
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 2.43,
+          "stock_exposure_from_fund": 1087.1091
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "stock_ticker": "ISRG",
+      "total_exposure_value": 8135.6,
+      "percent_of_portfolio": 4.54,
+      "is_direct_holding": true,
+      "sources": [
+        {
+          "fund_ticker": "ISRG",
+          "fund_type": "STOCK",
+          "fund_position_value": 8135.6,
+          "stock_weight_in_fund": 100.0,
+          "stock_exposure_from_fund": 8135.6
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "stock_ticker": "NVDA",
+      "total_exposure_value": 6375.0225,
+      "percent_of_portfolio": 3.56,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 14.25,
+          "stock_exposure_from_fund": 6375.0225
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "stock_ticker": "MSFT",
+      "total_exposure_value": 4156.0673,
+      "percent_of_portfolio": 2.32,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 9.29,
+          "stock_exposure_from_fund": 4156.0673
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "stock_ticker": "AAPL",
+      "total_exposure_value": 2845.2732,
+      "percent_of_portfolio": 1.59,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 6.36,
+          "stock_exposure_from_fund": 2845.2732
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "stock_ticker": "GOOGL",
+      "total_exposure_value": 2751.3255,
+      "percent_of_portfolio": 1.53,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 6.15,
+          "stock_exposure_from_fund": 2751.3255
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "stock_ticker": "AVGO",
+      "total_exposure_value": 2630.5356,
+      "percent_of_portfolio": 1.47,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 5.88,
+          "stock_exposure_from_fund": 2630.5356
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "stock_ticker": "TPE: 2330",
+      "total_exposure_value": 2230.926116,
+      "percent_of_portfolio": 1.24,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 3.98,
+          "stock_exposure_from_fund": 2230.926116
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "stock_ticker": "META",
+      "total_exposure_value": 1717.9008,
+      "percent_of_portfolio": 0.96,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 3.84,
+          "stock_exposure_from_fund": 1717.9008
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "stock_ticker": "N/A",
+      "total_exposure_value": 1457.38892,
+      "percent_of_portfolio": 0.81,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 1.84,
+          "stock_exposure_from_fund": 1031.382928
+        },
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.76,
+          "stock_exposure_from_fund": 426.005992
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "stock_ticker": "MU",
+      "total_exposure_value": 1360.0048,
+      "percent_of_portfolio": 0.76,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 3.04,
+          "stock_exposure_from_fund": 1360.0048
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "stock_ticker": "KRX: 005930",
+      "total_exposure_value": 1227.569898,
+      "percent_of_portfolio": 0.68,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 2.19,
+          "stock_exposure_from_fund": 1227.569898
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "stock_ticker": "BRK.B",
+      "total_exposure_value": 1082.6354,
+      "percent_of_portfolio": 0.6,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 2.42,
+          "stock_exposure_from_fund": 1082.6354
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "stock_ticker": "AMD",
+      "total_exposure_value": 1046.8458,
+      "percent_of_portfolio": 0.58,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 2.34,
+          "stock_exposure_from_fund": 1046.8458
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "stock_ticker": "KRX: 000660",
+      "total_exposure_value": 1042.593612,
+      "percent_of_portfolio": 0.58,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 1.86,
+          "stock_exposure_from_fund": 1042.593612
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "stock_ticker": "TSLA",
+      "total_exposure_value": 943.9507,
+      "percent_of_portfolio": 0.53,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 2.11,
+          "stock_exposure_from_fund": 943.9507
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "stock_ticker": "AMS: ASML",
+      "total_exposure_value": 779.142538,
+      "percent_of_portfolio": 0.43,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 1.39,
+          "stock_exposure_from_fund": 779.142538
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "stock_ticker": "JPM",
+      "total_exposure_value": 639.7391,
+      "percent_of_portfolio": 0.36,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 1.43,
+          "stock_exposure_from_fund": 639.7391
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "stock_ticker": "CAT",
+      "total_exposure_value": 505.5281,
+      "percent_of_portfolio": 0.28,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 1.13,
+          "stock_exposure_from_fund": 505.5281
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "stock_ticker": "LRCX",
+      "total_exposure_value": 492.107,
+      "percent_of_portfolio": 0.27,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 1.1,
+          "stock_exposure_from_fund": 492.107
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "stock_ticker": "NFLX",
+      "total_exposure_value": 451.8437,
+      "percent_of_portfolio": 0.25,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 1.01,
+          "stock_exposure_from_fund": 451.8437
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "stock_ticker": "PLTR",
+      "total_exposure_value": 442.8963,
+      "percent_of_portfolio": 0.25,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.99,
+          "stock_exposure_from_fund": 442.8963
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "stock_ticker": "AMAT",
+      "total_exposure_value": 442.8963,
+      "percent_of_portfolio": 0.25,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.99,
+          "stock_exposure_from_fund": 442.8963
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "stock_ticker": "HKG: 0700",
+      "total_exposure_value": 414.795308,
+      "percent_of_portfolio": 0.23,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.74,
+          "stock_exposure_from_fund": 414.795308
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "stock_ticker": "JNJ",
+      "total_exposure_value": 398.1593,
+      "percent_of_portfolio": 0.22,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.89,
+          "stock_exposure_from_fund": 398.1593
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "stock_ticker": "LON: HSBA",
+      "total_exposure_value": 397.979282,
+      "percent_of_portfolio": 0.22,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.71,
+          "stock_exposure_from_fund": 397.979282
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "stock_ticker": "V",
+      "total_exposure_value": 375.7908,
+      "percent_of_portfolio": 0.21,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.84,
+          "stock_exposure_from_fund": 375.7908
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "stock_ticker": "SWX: ROP",
+      "total_exposure_value": 364.34723,
+      "percent_of_portfolio": 0.2,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.65,
+          "stock_exposure_from_fund": 364.34723
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "stock_ticker": "SWX: NOVN",
+      "total_exposure_value": 358.741888,
+      "percent_of_portfolio": 0.2,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.64,
+          "stock_exposure_from_fund": 358.741888
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "stock_ticker": "LON: AZN",
+      "total_exposure_value": 347.531204,
+      "percent_of_portfolio": 0.19,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.62,
+          "stock_exposure_from_fund": 347.531204
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "stock_ticker": "BABAF",
+      "total_exposure_value": 341.925862,
+      "percent_of_portfolio": 0.19,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.61,
+          "stock_exposure_from_fund": 341.925862
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "stock_ticker": "MA",
+      "total_exposure_value": 335.5275,
+      "percent_of_portfolio": 0.19,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.75,
+          "stock_exposure_from_fund": 335.5275
+        }
+      ]
+    },
+    {
+      "rank": 36,
+      "stock_ticker": "TSX: RY",
+      "total_exposure_value": 330.715178,
+      "percent_of_portfolio": 0.18,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.59,
+          "stock_exposure_from_fund": 330.715178
+        }
+      ]
+    },
+    {
+      "rank": 37,
+      "stock_ticker": "SWX: NESN",
+      "total_exposure_value": 325.109836,
+      "percent_of_portfolio": 0.18,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.58,
+          "stock_exposure_from_fund": 325.109836
+        }
+      ]
+    },
+    {
+      "rank": 38,
+      "stock_ticker": "GEV",
+      "total_exposure_value": 322.1064,
+      "percent_of_portfolio": 0.18,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.72,
+          "stock_exposure_from_fund": 322.1064
+        }
+      ]
+    },
+    {
+      "rank": 39,
+      "stock_ticker": "CSCO",
+      "total_exposure_value": 313.159,
+      "percent_of_portfolio": 0.17,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.7,
+          "stock_exposure_from_fund": 313.159
+        }
+      ]
+    },
+    {
+      "rank": 40,
+      "stock_ticker": "KLAC",
+      "total_exposure_value": 313.159,
+      "percent_of_portfolio": 0.17,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VOOG",
+          "fund_type": "ETF",
+          "fund_position_value": 44737.0,
+          "stock_weight_in_fund": 0.7,
+          "stock_exposure_from_fund": 313.159
+        }
+      ]
+    },
+    {
+      "rank": 41,
+      "stock_ticker": "LON: SHEL",
+      "total_exposure_value": 297.083126,
+      "percent_of_portfolio": 0.17,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.53,
+          "stock_exposure_from_fund": 297.083126
+        }
+      ]
+    },
+    {
+      "rank": 42,
+      "stock_ticker": "ETR: SIE",
+      "total_exposure_value": 285.872442,
+      "percent_of_portfolio": 0.16,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.51,
+          "stock_exposure_from_fund": 285.872442
+        }
+      ]
+    },
+    {
+      "rank": 43,
+      "stock_ticker": "ASX: BHP",
+      "total_exposure_value": 269.056416,
+      "percent_of_portfolio": 0.15,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.48,
+          "stock_exposure_from_fund": 269.056416
+        }
+      ]
+    },
+    {
+      "rank": 44,
+      "stock_ticker": "TYO: 8306",
+      "total_exposure_value": 257.845732,
+      "percent_of_portfolio": 0.14,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.46,
+          "stock_exposure_from_fund": 257.845732
+        }
+      ]
+    },
+    {
+      "rank": 45,
+      "stock_ticker": "TYO: 7203",
+      "total_exposure_value": 246.635048,
+      "percent_of_portfolio": 0.14,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.44,
+          "stock_exposure_from_fund": 246.635048
+        }
+      ]
+    },
+    {
+      "rank": 46,
+      "stock_ticker": "TPE: 2454",
+      "total_exposure_value": 246.635048,
+      "percent_of_portfolio": 0.14,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.44,
+          "stock_exposure_from_fund": 246.635048
+        }
+      ]
+    },
+    {
+      "rank": 47,
+      "stock_ticker": "ASX: CBA",
+      "total_exposure_value": 246.635048,
+      "percent_of_portfolio": 0.14,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.44,
+          "stock_exposure_from_fund": 246.635048
+        }
+      ]
+    },
+    {
+      "rank": 48,
+      "stock_ticker": "TSX: TD",
+      "total_exposure_value": 241.029706,
+      "percent_of_portfolio": 0.13,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.43,
+          "stock_exposure_from_fund": 241.029706
+        }
+      ]
+    },
+    {
+      "rank": 49,
+      "stock_ticker": "ETR: SAP",
+      "total_exposure_value": 229.819022,
+      "percent_of_portfolio": 0.13,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.41,
+          "stock_exposure_from_fund": 229.819022
+        }
+      ]
+    },
+    {
+      "rank": 50,
+      "stock_ticker": "TYO: 9984",
+      "total_exposure_value": 229.819022,
+      "percent_of_portfolio": 0.13,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.41,
+          "stock_exposure_from_fund": 229.819022
+        }
+      ]
+    },
+    {
+      "rank": 51,
+      "stock_ticker": "BME: SAN",
+      "total_exposure_value": 229.819022,
+      "percent_of_portfolio": 0.13,
+      "is_direct_holding": false,
+      "sources": [
+        {
+          "fund_ticker": "VXUS",
+          "fund_type": "ETF",
+          "fund_position_value": 56053.42,
+          "stock_weight_in_fund": 0.41,
+          "stock_exposure_from_fund": 229.819022
+        }
+      ]
+    }
+  ]
+}
