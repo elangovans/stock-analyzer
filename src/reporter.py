@@ -83,6 +83,27 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
         items = "".join(f"<li>{w}</li>" for w in analysis.warnings)
         warnings_html = f"<div class='warnings'><strong>Warnings:</strong><ul>{items}</ul></div>"
 
+    # ── Pie chart data: top 10 + "All Other" ──────────────────────────────────
+    PIE_COLORS = [
+        "#2563eb", "#16a34a", "#dc2626", "#d97706", "#7c3aed",
+        "#0891b2", "#be185d", "#65a30d", "#ea580c", "#4f46e5",
+        "#94a3b8",  # All Other
+    ]
+    top10 = analysis.stock_exposures[:10]
+    other_value = sum(e.total_exposure_value for e in analysis.stock_exposures[10:])
+    pie_slices = [
+        {"label": e.stock_ticker, "value": float(e.total_exposure_value)}
+        for e in top10
+    ]
+    if other_value > 0:
+        pie_slices.append({"label": "All Other", "value": float(other_value)})
+
+    pie_total = sum(s["value"] for s in pie_slices)
+    pie_data_js = json.dumps([
+        {**s, "color": PIE_COLORS[i], "pct": s["value"] / pie_total * 100 if pie_total else 0}
+        for i, s in enumerate(pie_slices)
+    ])
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,9 +120,21 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
   .card {{ background: #fff; border-radius: 10px; padding: 18px 24px; flex: 1; min-width: 180px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }}
   .card-label {{ font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 6px; }}
   .card-value {{ font-size: 1.5rem; font-weight: 700; color: #1a1a2e; }}
-  .card-value.green {{ color: #16a34a; }}
   .warnings {{ background: #fff3cd; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem; }}
   .warnings ul {{ margin-top: 6px; padding-left: 16px; }}
+  /* Pie chart section */
+  .chart-section {{ background: #fff; border-radius: 10px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }}
+  .chart-section h2 {{ font-size: 1rem; font-weight: 600; margin-bottom: 20px; color: #1a1a2e; }}
+  .chart-layout {{ display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }}
+  #pie-canvas {{ flex-shrink: 0; }}
+  .legend {{ display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 180px; }}
+  .legend-item {{ display: flex; align-items: center; gap: 10px; font-size: 0.85rem; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: background 0.15s; }}
+  .legend-item:hover {{ background: #f1f5f9; }}
+  .legend-dot {{ width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }}
+  .legend-label {{ font-weight: 600; min-width: 56px; }}
+  .legend-pct {{ color: #2563eb; font-weight: 700; min-width: 46px; }}
+  .legend-val {{ color: #888; font-size: 0.78rem; }}
+  /* Table */
   table {{ width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }}
   thead {{ background: #1a1a2e; color: #fff; }}
   th {{ padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }}
@@ -116,6 +149,7 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
   .src-tag {{ background: #e8f0fe; color: #1d4ed8; border-radius: 4px; padding: 1px 6px; font-weight: 600; font-size: 0.78rem; }}
   .weight {{ color: #aaa; }}
   .badge-direct {{ background: #dcfce7; color: #15803d; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 700; vertical-align: middle; margin-left: 6px; }}
+  .section-title {{ font-size: 1rem; font-weight: 600; margin-bottom: 14px; color: #1a1a2e; }}
 </style>
 </head>
 <body>
@@ -123,6 +157,7 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
   <h1>Portfolio Stock Exposure Report</h1>
   <p class="subtitle">Generated {date_str} &mdash; Top 25 holdings per fund</p>
   {warnings_html}
+
   <div class="summary-cards">
     <div class="card">
       <div class="card-label">Portfolio Total</div>
@@ -141,6 +176,16 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
       <div class="card-value">{len(analysis.stock_exposures)}</div>
     </div>
   </div>
+
+  <div class="chart-section">
+    <h2>Top Stock Exposure Breakdown</h2>
+    <div class="chart-layout">
+      <canvas id="pie-canvas" width="300" height="300"></canvas>
+      <div class="legend" id="pie-legend"></div>
+    </div>
+  </div>
+
+  <p class="section-title">Full Exposure Table</p>
   <table>
     <thead>
       <tr>
@@ -156,6 +201,96 @@ def _build_html(analysis: PortfolioAnalysis) -> str:
     </tbody>
   </table>
 </div>
+
+<script>
+(function () {{
+  const slices = {pie_data_js};
+  const canvas = document.getElementById('pie-canvas');
+  const ctx = canvas.getContext('2d');
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = 118, hole = 58;
+
+  let total = slices.reduce((s, d) => s + d.value, 0);
+  let startAngle = -Math.PI / 2;
+  const arcs = [];
+
+  slices.forEach((d, i) => {{
+    const sweep = (d.value / total) * 2 * Math.PI;
+    arcs.push({{ start: startAngle, end: startAngle + sweep, ...d }});
+    startAngle += sweep;
+  }});
+
+  function drawChart(highlightIdx) {{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    arcs.forEach((a, i) => {{
+      const expand = (i === highlightIdx) ? 8 : 0;
+      const mid = (a.start + a.end) / 2;
+      const ox = Math.cos(mid) * expand, oy = Math.sin(mid) * expand;
+      ctx.beginPath();
+      ctx.moveTo(cx + ox, cy + oy);
+      ctx.arc(cx + ox, cy + oy, r, a.start, a.end);
+      ctx.arc(cx + ox, cy + oy, hole, a.end, a.start, true);
+      ctx.closePath();
+      ctx.fillStyle = a.color;
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }});
+    // Center label
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = 'bold 13px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (highlightIdx !== null && highlightIdx !== undefined) {{
+      const s = arcs[highlightIdx];
+      ctx.fillText(s.label, cx, cy - 10);
+      ctx.font = '12px system-ui';
+      ctx.fillStyle = '#2563eb';
+      ctx.fillText(s.pct.toFixed(1) + '%', cx, cy + 10);
+    }} else {{
+      ctx.fillText('Exposure', cx, cy - 8);
+      ctx.font = '11px system-ui';
+      ctx.fillStyle = '#888';
+      ctx.fillText('by stock', cx, cy + 10);
+    }}
+  }}
+
+  // Build legend
+  const legend = document.getElementById('pie-legend');
+  arcs.forEach((a, i) => {{
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `
+      <span class="legend-dot" style="background:${{a.color}}"></span>
+      <span class="legend-label">${{a.label}}</span>
+      <span class="legend-pct">${{a.pct.toFixed(1)}}%</span>
+      <span class="legend-val">$${{a.value.toLocaleString('en-US', {{minimumFractionDigits:0, maximumFractionDigits:0}})}}</span>
+    `;
+    item.addEventListener('mouseenter', () => drawChart(i));
+    item.addEventListener('mouseleave', () => drawChart(null));
+    legend.appendChild(item);
+  }});
+
+  // Canvas hover
+  canvas.addEventListener('mousemove', (e) => {{
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left - cx, my = e.clientY - rect.top - cy;
+    const dist = Math.sqrt(mx * mx + my * my);
+    if (dist < hole || dist > r) {{ drawChart(null); return; }}
+    const angle = Math.atan2(my, mx);
+    const norm = angle < -Math.PI / 2 ? angle + 2 * Math.PI : angle;
+    const idx = arcs.findIndex(a => {{
+      const s = a.start < -Math.PI / 2 ? a.start + 2 * Math.PI : a.start;
+      const en = a.end < -Math.PI / 2 ? a.end + 2 * Math.PI : a.end;
+      return norm >= s && norm <= en;
+    }});
+    drawChart(idx >= 0 ? idx : null);
+  }});
+  canvas.addEventListener('mouseleave', () => drawChart(null));
+
+  drawChart(null);
+}})();
+</script>
 </body>
 </html>"""
 

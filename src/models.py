@@ -9,7 +9,7 @@ class PortfolioItem:
     ticker: str
     type: Literal["ETF", "MF", "STOCK", "CASH"]
     quantity: Decimal
-    current_price: Decimal
+    current_price: Decimal = Decimal("0")  # populated after price fetch
 
     @property
     def position_value(self) -> Decimal:

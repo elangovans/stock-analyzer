@@ -18,12 +18,9 @@ def _holding(stock: str, etf: str, weight: str) -> Holding:
 
 
 def _item(ticker: str, itype: str, qty: str, price: str) -> PortfolioItem:
-    return PortfolioItem(
-        ticker=ticker,
-        type=itype,
-        quantity=Decimal(qty),
-        current_price=Decimal(price),
-    )
+    item = PortfolioItem(ticker=ticker, type=itype, quantity=Decimal(qty))
+    item.current_price = Decimal(price)
+    return item
 
 
 class TestPositionValue:
