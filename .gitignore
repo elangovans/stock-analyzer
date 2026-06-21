@@ -10,6 +10,9 @@ venv/
 dist/
 build/
 
+# PyInstaller
+*.spec.bak
+
 # pytest
 .pytest_cache/
 
