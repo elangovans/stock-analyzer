@@ -4,7 +4,7 @@ import re
 from datetime import datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import requests
 import yfinance as yf
@@ -14,6 +14,7 @@ from .models import Holding
 
 CACHE_DIR = Path(__file__).parent.parent / "cache"
 CACHE_TTL_HOURS = 24
+SECTOR_CACHE_TTL_HOURS = 168  # 7 days — sectors rarely change
 TOP_N_HOLDINGS = 25
 
 HEADERS = {
@@ -31,16 +32,43 @@ class FetchError(Exception):
     pass
 
 
-# ── Price fetch ───────────────────────────────────────────────────────────────
+# ── Ticker normalization ──────────────────────────────────────────────────────
 
-def fetch_price(ticker: str) -> Decimal:
-    """Fetch current market price via yfinance."""
-    data = yf.Ticker(ticker)
-    info = data.fast_info
-    price = getattr(info, "last_price", None) or getattr(info, "regular_market_price", None)
-    if not price:
-        raise FetchError(f"Could not retrieve price for {ticker}")
-    return Decimal(str(round(price, 4)))
+def _yf_ticker(ticker: str) -> str:
+    """Normalize ticker for yfinance: BRK/B → BRK-B."""
+    return ticker.replace("/", "-")
+
+
+# ── Price fetch (batched) ─────────────────────────────────────────────────────
+
+def fetch_prices_batch(tickers: List[str]) -> Dict[str, Decimal]:
+    """Fetch current prices for all tickers in a single yf.download() call."""
+    yf_map = {_yf_ticker(t): t for t in tickers}  # yf_symbol → original ticker
+    yf_symbols = list(yf_map.keys())
+
+    prices: Dict[str, Decimal] = {}
+    try:
+        data = yf.download(
+            tickers=yf_symbols,
+            period="5d",        # 5 days to handle weekends/holidays
+            auto_adjust=True,
+            progress=False,
+        )
+        # data["Close"] is a DataFrame: columns = symbols, rows = dates
+        close = data["Close"] if "Close" in data.columns else data
+        latest = close.ffill().iloc[-1]  # last available price per ticker
+
+        for yf_sym, orig in yf_map.items():
+            try:
+                price = float(latest[yf_sym]) if yf_sym in latest.index else None
+                if price and price > 0:
+                    prices[orig] = Decimal(str(round(price, 4)))
+            except Exception:
+                pass  # individual miss handled below
+    except Exception as e:
+        raise FetchError(f"Batch price download failed: {e}")
+
+    return prices
 
 
 # ── Cache ──────────────────────────────────────────────────────────────────────
@@ -248,3 +276,54 @@ def _hydrate(etf_ticker: str, raw: List[dict]) -> List[Holding]:
         )
         for h in raw
     ]
+
+
+# ── Sector fetch ───────────────────────────────────────────────────────────────
+
+_SECTOR_CACHE_PATH = CACHE_DIR / "sectors.json"
+
+
+def _read_sector_cache() -> Dict[str, str]:
+    if not _SECTOR_CACHE_PATH.exists():
+        return {}
+    data = json.loads(_SECTOR_CACHE_PATH.read_text())
+    cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
+    if datetime.now() - cached_at > timedelta(hours=SECTOR_CACHE_TTL_HOURS):
+        return {}
+    return data.get("sectors", {})
+
+
+def _write_sector_cache(sectors: Dict[str, str]) -> None:
+    CACHE_DIR.mkdir(exist_ok=True)
+    existing = _read_sector_cache()
+    existing.update(sectors)
+    _SECTOR_CACHE_PATH.write_text(json.dumps({
+        "cached_at": datetime.now().isoformat(),
+        "sectors": existing,
+    }, indent=2))
+
+
+def fetch_sectors(tickers: List[str]) -> Dict[str, str]:
+    """Return {ticker: sector} for all tickers, using cache where available."""
+    cached = _read_sector_cache()
+    missing = [t for t in tickers if t not in cached]
+
+    if missing:
+        # Normalize tickers for yfinance (BRK/B → BRK-B) but key results by original
+        yf_map = {_yf_ticker(t): t for t in missing}
+        batch = yf.Tickers(" ".join(yf_map.keys()))
+        new_sectors: Dict[str, str] = {}
+        for yf_sym, orig in yf_map.items():
+            try:
+                info = batch.tickers[yf_sym].info
+                sector = info.get("sector") or ""
+                if not sector:
+                    quote_type = info.get("quoteType", "")
+                    sector = "ETF / Mutual Fund" if quote_type in ("ETF", "MUTUALFUND") else "Unknown"
+            except Exception:
+                sector = "Unknown"
+            new_sectors[orig] = sector
+        _write_sector_cache(new_sectors)
+        cached.update(new_sectors)
+
+    return {t: cached.get(t, "Unknown") for t in tickers}

@@ -2,7 +2,7 @@ import argparse
 import sys
 from typing import Dict, List
 
-from .fetcher import FetchError, fetch_holdings, fetch_price
+from .fetcher import FetchError, fetch_holdings, fetch_prices_batch, fetch_sectors
 from .models import Holding, PortfolioItem
 from .calculator import analyze
 from .reporter import write_reports
@@ -10,16 +10,24 @@ from .validator import ValidationError, load_portfolio
 
 
 def _fetch_prices(portfolio: List[PortfolioItem], warnings: List[str]) -> None:
-    """Populate current_price on each item in-place."""
+    """Batch-fetch prices for all tickers in one yfinance call, populate in-place."""
+    tickers = [p.ticker for p in portfolio]
+    try:
+        prices = fetch_prices_batch(tickers)
+    except FetchError as e:
+        warnings.append(f"Batch price fetch failed: {e}")
+        print(f"  FAILED — {e}")
+        return
+
     for item in portfolio:
-        print(f"  {item.ticker}...", end=" ", flush=True)
-        try:
-            item.current_price = fetch_price(item.ticker)
-            print(f"${float(item.current_price):,.2f}")
-        except FetchError as e:
-            msg = f"Could not fetch price for {item.ticker}: {e}"
+        price = prices.get(item.ticker)
+        if price:
+            item.current_price = price
+            print(f"  {item.ticker:<8} ${float(price):,.2f}")
+        else:
+            msg = f"Could not retrieve price for {item.ticker}"
             warnings.append(msg)
-            print(f"FAILED — {e}")
+            print(f"  {item.ticker:<8} FAILED — no price returned")
 
 
 def _fetch_all_holdings(
@@ -45,7 +53,7 @@ def run(portfolio_path: str) -> None:
     print(f"\nPortfolio Analyzer")
     print("=" * 50)
 
-    print(f"\n[1/5] Loading portfolio from {portfolio_path}")
+    print(f"\n[1/6] Loading portfolio from {portfolio_path}")
     try:
         portfolio = load_portfolio(portfolio_path)
     except (ValidationError, FileNotFoundError) as e:
@@ -55,27 +63,32 @@ def run(portfolio_path: str) -> None:
 
     warnings: List[str] = []
 
-    print("\n[2/5] Fetching current prices")
+    print("\n[2/6] Fetching current prices (batch)")
     _fetch_prices(portfolio, warnings)
 
-    # Skip items where price fetch failed
     valid = [p for p in portfolio if p.current_price > 0]
     skipped = len(portfolio) - len(valid)
     if skipped:
-        print(f"      {skipped} position(s) skipped due to missing price")
+        print(f"      {skipped} position(s) skipped — no price available")
 
     total = sum(p.position_value for p in valid)
     print(f"      Portfolio total: ${float(total):,.2f}")
 
-    print("\n[3/5] Fetching ETF/MF holdings")
+    print("\n[3/6] Fetching ETF/MF holdings")
     holdings_map = _fetch_all_holdings(valid, warnings)
 
-    print("\n[4/5] Calculating stock exposures")
+    print("\n[4/6] Calculating stock exposures")
     analysis = analyze(valid, holdings_map, warnings)
     print(f"      {len(analysis.stock_exposures)} unique stocks tracked")
 
-    print("\n[5/5] Writing reports")
-    json_path, html_path = write_reports(analysis, portfolio_path)
+    print("\n[5/6] Fetching sectors (batch)")
+    all_tickers = [e.stock_ticker for e in analysis.stock_exposures]
+    sectors = fetch_sectors(all_tickers)
+    unique_sectors = len(set(v for v in sectors.values() if v not in ("Unknown", "ETF / Mutual Fund")))
+    print(f"      {unique_sectors} sectors identified")
+
+    print("\n[6/6] Writing reports")
+    json_path, html_path = write_reports(analysis, sectors, portfolio_path)
     print(f"      {json_path}")
     print(f"      {html_path}")
 
