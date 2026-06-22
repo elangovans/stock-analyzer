@@ -81,7 +81,42 @@ FXAIX,MF,200
 stock-analyzer-windows.exe portfolio.csv
 ```
 
-### 3. View your reports
+### 3. (Optional) Enable News Briefs
+
+The **News Briefs** tab is powered by Claude AI and requires an Anthropic API key. It is completely optional — the rest of the report works without it.
+
+**Option A — drop a `.env` file next to the binary:**
+```bash
+cp .env.example .env
+# open .env and replace the placeholder with your key
+```
+
+```
+# .env
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+**Option B — set a shell environment variable (applies to all terminals):**
+```bash
+# Add to ~/.zshrc or ~/.bash_profile
+export ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+Get your API key at [console.anthropic.com](https://console.anthropic.com). Without a key the News Briefs tab simply doesn't appear — no errors.
+
+### 4. Run the analyzer
+
+**macOS:**
+```bash
+./stock-analyzer portfolio.csv
+```
+
+**Windows:**
+```
+stock-analyzer-windows.exe portfolio.csv
+```
+
+### 5. View your reports
 
 Reports are saved to an `output/` folder created next to where you run the tool:
 
@@ -92,15 +127,15 @@ Reports are saved to an `output/` folder created next to where you run the tool:
 
 ## Sample Output
 
-**Terminal:**
+**Terminal (with News Briefs enabled):**
 ```
 Portfolio Analyzer
 ==================================================
 
-[1/6] Loading portfolio from portfolio.json
+[1/8] Loading portfolio from portfolio.json
       7 positions loaded
 
-[2/6] Fetching current prices (batch)
+[2/8] Fetching current prices (batch)
   VOO      $688.11
   QQQ      $740.62
   SCHD     $31.86
@@ -110,19 +145,29 @@ Portfolio Analyzer
   VTSNX    $186.39
       Portfolio total: $581,496.50
 
-[3/6] Fetching ETF/MF holdings
+[3/8] Fetching ETF/MF holdings
   VOO... [stockanalysis.com] OK (25 holdings)
   QQQ... [stockanalysis.com] OK (25 holdings)
   SCHD... [stockanalysis.com] OK (25 holdings)
   FXAIX... [stockanalysis.com] OK (25 holdings)
 
-[4/6] Calculating stock exposures
+[4/8] Calculating stock exposures
       95 unique stocks tracked
 
-[5/6] Fetching sectors (batch)
+[5/8] Fetching sectors (batch)
       9 sectors identified
 
-[6/6] Writing reports
+[6/8] Fetching earnings dates
+      2 stock(s) reporting in next 10 days
+
+[7/8] Fetching & classifying news (Claude AI)
+      Fetching headlines for 1 ticker(s):
+      NVDA... 8 article(s)
+      Classifying 8 article(s) in 1 batch(es) via Claude...
+      Batch 1/1... done
+      3 notable/high-stake item(s) found
+
+[8/8] Writing reports
       output/portfolio_20260620_112452.json
       output/portfolio_20260620_112452.html
 
@@ -130,25 +175,22 @@ Portfolio Analyzer
 Top 10 exposures:
    1. NVDA   $ 55,719.42   9.58%  ###################
    2. AAPL   $ 23,323.19   4.01%  ########
-   3. MU     $ 21,956.46   3.78%  #######
-   4. AVGO   $ 18,680.21   3.21%  ######
-   5. AMD    $ 17,428.62   3.00%  ######
-   6. MSFT   $ 16,239.96   2.79%  #####
-   7. INTC   $ 15,967.80   2.75%  #####
-   8. AMZN   $ 13,938.35   2.40%  ####
-   9. TSM    $ 12,418.94   2.14%  ####
-  10. GOOGL  $ 11,596.94   1.99%  ###
+   ...
 
   Coverage: $407,239.70 / $581,496.50 (70.0%)
 ```
 
-**HTML Report:**
+**HTML Report — three tabs:**
 
-The `output/*.html` file opens in any browser and shows:
-- Summary cards (portfolio total, tracked exposure, coverage %, unique stocks)
-- **Stock exposure donut chart** — top 25 stocks with individual wedges, rest bucketed as "All Other (N stocks)"; hover to highlight
-- **Sector breakdown donut chart** — exposure aggregated by sector side by side
-- Full ranked table with stock, sector, total exposure, % of portfolio, and per-fund breakdown
+| Tab | Contents |
+|-----|----------|
+| **Stock Exposure** | Full ranked table with sortable columns — stock, sector, total exposure, % of portfolio, earnings date (highlighted if ≤10 days), per-fund breakdown |
+| **Earnings Calendar** | Stocks reporting in the next 10 days; rows color-coded by urgency; DIRECT vs VIA FUND badge |
+| **📰 News Briefs** | AI-classified news grouped by category (Leadership, M&A, Regulatory, Financial, Legal, Product); 1–5 star criticality rating; noise filtered out. Tab only appears if `ANTHROPIC_API_KEY` is configured. |
+
+Charts on every run (no API key needed):
+- **Stock exposure donut** — top 25 stocks, hover to highlight
+- **Sector breakdown donut** — exposure aggregated by sector
 
 ---
 
@@ -181,7 +223,7 @@ Batch-fetch live prices via yfinance     ← one network call for all tickers
        │
        ▼
 Fetch top-25 holdings per ETF/MF         ← stockanalysis.com → morningstar.com fallback
-       │                                    results cached 24hr in cache/
+       │                                    cached 24hr in cache/
        ▼
 Calculate stock exposure per holding     ← position_value × weight%
        │
@@ -189,8 +231,14 @@ Calculate stock exposure per holding     ← position_value × weight%
 Aggregate by ticker                      ← merge fund exposures + direct holdings
        │
        ▼
-Batch-fetch sector for each stock        ← one yfinance call, cached 7 days
+Batch-fetch sector for each stock        ← yfinance, cached 7 days
        │
+       ▼
+Fetch next earnings date per stock       ← yfinance, cached 24hr
+       │
+       ▼
+Fetch & classify news (optional)         ← yfinance headlines → Claude AI batch call
+       │                                    cached 6hr in cache/
        ▼
 output/{name}_{timestamp}.json + .html
 ```
@@ -199,13 +247,16 @@ output/{name}_{timestamp}.json + .html
 
 ## Data Sources
 
-| Data | Primary | Fallback | Cache |
-|------|---------|----------|-------|
-| Live prices | yfinance | — | none (always live) |
-| ETF/MF holdings | stockanalysis.com | morningstar.com | 24 hours |
-| Stock sectors | yfinance | — | 7 days |
+| Data | Source | Cache | Requires |
+|------|--------|-------|----------|
+| Live prices | yfinance | none (always live) | — |
+| ETF/MF holdings | stockanalysis.com → morningstar.com | 24 hours | — |
+| Stock sectors | yfinance | 7 days | — |
+| Earnings dates | yfinance | 24 hours | — |
+| News headlines | yfinance | 6 hours | — |
+| News classification & summaries | Claude AI (Haiku) | 6 hours (shared with headlines) | `ANTHROPIC_API_KEY` |
 
-No API keys or paid subscriptions required.
+Core features require no API keys. News Briefs requires an Anthropic subscription.
 
 ---
 
@@ -252,9 +303,10 @@ stock-analyzer/
 ├── src/
 │   ├── models.py         # Core dataclasses
 │   ├── validator.py      # CSV/JSON loading and validation
-│   ├── fetcher.py        # Prices, holdings scraper, sectors, cache
+│   ├── fetcher.py        # Prices, holdings scraper, sectors, earnings, cache
 │   ├── calculator.py     # Decimal-precision exposure calculation
-│   ├── reporter.py       # JSON + HTML report with charts
+│   ├── news.py           # News fetch + Claude AI classification (optional)
+│   ├── reporter.py       # JSON + HTML report with charts and tabs
 │   └── main.py           # CLI entry point
 ├── tests/
 │   ├── test_calculator.py
@@ -264,6 +316,7 @@ stock-analyzer/
 ├── stock-analyzer.spec   # PyInstaller build config
 ├── run.py                # PyInstaller entry point
 ├── pyproject.toml        # Package metadata
+├── .env.example          # API key template — copy to .env to enable News Briefs
 ├── portfolio.csv         # Sample portfolio
 └── portfolio.json        # Sample portfolio
 ```
