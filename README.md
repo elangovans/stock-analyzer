@@ -10,22 +10,25 @@ If you hold VOO, QQQ, and NVDA directly, this tool tells you exactly how much NV
 
 ### For users (no Python required)
 
-Download the pre-built binary for your platform from the [Releases page](../../releases/latest):
+Download the zip for your platform from the [Releases page](../../releases/latest), unzip it, and follow the setup steps below.
 
 | Platform | File to download |
 |----------|-----------------|
-| macOS | `stock-analyzer-mac` |
-| Windows | `stock-analyzer-windows.exe` |
+| macOS (Apple Silicon) | `stock-analyzer-*-macos-arm64.zip` |
+| macOS (Intel) | `stock-analyzer-*-macos-x86_64.zip` |
+| Windows | `stock-analyzer-*-windows.zip` |
 
 **macOS setup (one time only):**
 
 ```bash
-# 1. Make it executable
-chmod +x stock-analyzer-mac
+# 1. Unzip and enter the folder
+unzip stock-analyzer-*-macos-arm64.zip
+cd stock-analyzer-*-macos-arm64
 
-# 2. First run: macOS will block it because it's not from the App Store.
-#    Right-click the file → Open → click "Open" in the dialog.
-#    After that first approval it runs normally.
+# 2. Remove the quarantine flag (macOS blocks unsigned binaries by default)
+xattr -dr com.apple.quarantine stock-analyzer
+
+# Alternatively: right-click the file → Open → click "Open" in the dialog.
 ```
 
 **Windows setup:**
@@ -329,3 +332,6 @@ stock-analyzer/
 - **Holdings data lag:** Published holdings may be 1–30 days behind actual fund composition depending on the provider's disclosure schedule.
 - **Non-US tickers:** Some foreign-listed stocks (e.g. UMG on Euronext) have no yfinance data and will show sector as "Unknown".
 - **Morningstar fallback:** If Morningstar's page structure changes, the fallback may stop working. A warning is printed and the fund is excluded.
+- **Earnings dates:** Only available for individual stocks — ETFs and mutual funds have no earnings date.
+- **News Briefs scope:** News is fetched for direct STOCK holdings only (not ETF sub-holdings). Claude classifies and filters noise; accuracy depends on headline quality from Yahoo Finance.
+- **News Briefs cost:** Each run that is not cached makes one Claude API call (Haiku tier). Results are cached for 6 hours to minimise cost.
