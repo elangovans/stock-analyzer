@@ -117,6 +117,23 @@ class TestStockExposure:
         analysis = analyze(portfolio, {}, ["Could not fetch VOO"])
         assert "Could not fetch VOO" in analysis.warnings
 
+    def test_duplicate_fund_lots_consolidated(self):
+        # Same fund (VOOG) held in two accounts — should appear once per stock, not twice
+        portfolio = [
+            _item("VOOG", "ETF", "100", "100.00"),  # account 1
+            _item("VOOG", "ETF", "50", "100.00"),   # account 2
+        ]
+        holdings_map = {"VOOG": [_holding("NVDA", "VOOG", "14.25")]}
+        analysis = analyze(portfolio, holdings_map, [])
+        nvda = next(e for e in analysis.stock_exposures if e.stock_ticker == "NVDA")
+        # Should have exactly one source for VOOG, not two
+        assert len(nvda.sources) == 1
+        assert nvda.sources[0].fund_ticker == "VOOG"
+        # Combined position value = 100*100 + 50*100 = 15,000
+        assert nvda.sources[0].fund_position_value == Decimal("15000.00")
+        # Combined exposure = 15,000 * 14.25% = 2,137.50
+        assert nvda.sources[0].stock_exposure_from_fund == Decimal("2137.5000")
+
     def test_portfolio_total_value(self):
         portfolio = [
             _item("VOO", "ETF", "200", "686.19"),

@@ -2,11 +2,25 @@ import argparse
 import sys
 from typing import Dict, List
 
-from .fetcher import FetchError, fetch_holdings, fetch_prices_batch, fetch_sectors
+import os
+import sys
+from pathlib import Path
+from dotenv import load_dotenv
+
+def _load_env() -> None:
+    if os.environ.get("ANTHROPIC_API_KEY", "").strip():
+        return  # Option B: already set in shell environment
+    base = Path(sys.executable).parent if getattr(sys, "frozen", False) else Path(__file__).parent.parent
+    load_dotenv(base / ".env")  # Option A: .env next to binary/project root (missing file is silently ignored)
+
+_load_env()
+
+from .fetcher import FetchError, fetch_holdings, fetch_prices_batch, fetch_sectors, fetch_earnings_dates
 from .models import Holding, PortfolioItem
 from .calculator import analyze
 from .reporter import write_reports
 from .validator import ValidationError, load_portfolio
+from .news import fetch_news, is_enabled as news_enabled
 
 
 def _fetch_prices(portfolio: List[PortfolioItem], warnings: List[str]) -> None:
@@ -53,7 +67,8 @@ def run(portfolio_path: str) -> None:
     print(f"\nPortfolio Analyzer")
     print("=" * 50)
 
-    print(f"\n[1/6] Loading portfolio from {portfolio_path}")
+    total_steps = 8 if news_enabled() else 7
+    print(f"\n[1/{total_steps}] Loading portfolio from {portfolio_path}")
     try:
         portfolio = load_portfolio(portfolio_path)
     except (ValidationError, FileNotFoundError) as e:
@@ -63,7 +78,7 @@ def run(portfolio_path: str) -> None:
 
     warnings: List[str] = []
 
-    print("\n[2/6] Fetching current prices (batch)")
+    print(f"\n[2/{total_steps}] Fetching current prices (batch)")
     _fetch_prices(portfolio, warnings)
 
     valid = [p for p in portfolio if p.current_price > 0]
@@ -74,21 +89,43 @@ def run(portfolio_path: str) -> None:
     total = sum(p.position_value for p in valid)
     print(f"      Portfolio total: ${float(total):,.2f}")
 
-    print("\n[3/6] Fetching ETF/MF holdings")
+    print(f"\n[3/{total_steps}] Fetching ETF/MF holdings")
     holdings_map = _fetch_all_holdings(valid, warnings)
 
-    print("\n[4/6] Calculating stock exposures")
+    print(f"\n[4/{total_steps}] Calculating stock exposures")
     analysis = analyze(valid, holdings_map, warnings)
     print(f"      {len(analysis.stock_exposures)} unique stocks tracked")
 
-    print("\n[5/6] Fetching sectors (batch)")
+    print(f"\n[5/{total_steps}] Fetching sectors (batch)")
     all_tickers = [e.stock_ticker for e in analysis.stock_exposures]
     sectors = fetch_sectors(all_tickers)
     unique_sectors = len(set(v for v in sectors.values() if v not in ("Unknown", "ETF / Mutual Fund")))
     print(f"      {unique_sectors} sectors identified")
 
-    print("\n[6/6] Writing reports")
-    json_path, html_path = write_reports(analysis, sectors, portfolio_path)
+    print(f"\n[6/{total_steps}] Fetching earnings dates")
+    earnings_dates = fetch_earnings_dates(all_tickers)
+    upcoming = sum(
+        1 for t, d in earnings_dates.items()
+        if d and 0 <= (d.date() - analysis.analysis_timestamp.date()).days <= 10
+    )
+    print(f"      {upcoming} stock(s) reporting in next 10 days")
+
+    news_items = []
+    if news_enabled():
+        print(f"\n[7/{total_steps}] Fetching & classifying news (Claude AI)")
+        direct_tickers = [p.ticker for p in valid if p.type == "STOCK"]
+        try:
+            news_items = fetch_news(direct_tickers if direct_tickers else all_tickers[:20])
+            notable = sum(1 for n in news_items if n.stars >= 3)
+            print(f"      {notable} notable/high-stake item(s) found")
+        except Exception as e:
+            warnings.append(f"News fetch failed: {e}")
+            print(f"      FAILED — {e}")
+    else:
+        print(f"\n[7/{total_steps}] News briefs — skipped (no ANTHROPIC_API_KEY)")
+
+    print(f"\n[{total_steps}/{total_steps}] Writing reports")
+    json_path, html_path = write_reports(analysis, sectors, earnings_dates, news_items, portfolio_path)
     print(f"      {json_path}")
     print(f"      {html_path}")
 

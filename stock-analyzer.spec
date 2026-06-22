@@ -30,6 +30,20 @@ a = Analysis(
         'lxml',
         'lxml.etree',
         'lxml._elementpath',
+        # anthropic (optional news feature)
+        'anthropic',
+        'anthropic._client',
+        'anthropic._base_client',
+        'anthropic.types',
+        'anthropic.resources',
+        'anthropic.resources.messages',
+        'httpx',
+        'httpcore',
+        'anyio',
+        'sniffio',
+        # dotenv
+        'dotenv',
+        'dotenv.main',
         # stdlib extras that get missed
         'decimal',
         'json',

@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 
 from .models import Holding
 
-CACHE_DIR = Path(__file__).parent.parent / "cache"
+CACHE_DIR = Path.cwd() / "cache"
 CACHE_TTL_HOURS = 24
 SECTOR_CACHE_TTL_HOURS = 168  # 7 days — sectors rarely change
 TOP_N_HOLDINGS = 25
@@ -301,6 +301,67 @@ def _write_sector_cache(sectors: Dict[str, str]) -> None:
         "cached_at": datetime.now().isoformat(),
         "sectors": existing,
     }, indent=2))
+
+
+def fetch_earnings_dates(tickers: List[str]) -> Dict[str, Optional[datetime]]:
+    """Return {ticker: next_earnings_date} for tickers. None if unavailable."""
+    cache_path = CACHE_DIR / "earnings.json"
+    EARNINGS_TTL_HOURS = 24
+
+    def _read_cache() -> Dict[str, str]:
+        if not cache_path.exists():
+            return {}
+        data = json.loads(cache_path.read_text())
+        cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
+        if datetime.now() - cached_at > timedelta(hours=EARNINGS_TTL_HOURS):
+            return {}
+        return data.get("earnings", {})
+
+    def _write_cache(new: Dict[str, str]) -> None:
+        CACHE_DIR.mkdir(exist_ok=True)
+        existing = _read_cache()
+        existing.update(new)
+        cache_path.write_text(json.dumps({
+            "cached_at": datetime.now().isoformat(),
+            "earnings": existing,
+        }, indent=2))
+
+    cached = _read_cache()
+    missing = [t for t in tickers if t not in cached]
+
+    if missing:
+        new_earnings: Dict[str, str] = {}
+        batch = yf.Tickers(" ".join(_yf_ticker(t) for t in missing))
+        for t in missing:
+            try:
+                cal = batch.tickers[_yf_ticker(t)].calendar
+                if isinstance(cal, dict):
+                    dates = cal.get("Earnings Date", [])
+                    if dates:
+                        d = dates[0] if isinstance(dates, list) else dates
+                        if hasattr(d, "to_pydatetime"):
+                            d = d.to_pydatetime()
+                        new_earnings[t] = d.strftime("%Y-%m-%d") if d else ""
+                    else:
+                        new_earnings[t] = ""
+                else:
+                    new_earnings[t] = ""
+            except Exception:
+                new_earnings[t] = ""
+        _write_cache(new_earnings)
+        cached.update(new_earnings)
+
+    result: Dict[str, Optional[datetime]] = {}
+    for t in tickers:
+        date_str = cached.get(t, "")
+        if date_str:
+            try:
+                result[t] = datetime.strptime(date_str, "%Y-%m-%d")
+            except Exception:
+                result[t] = None
+        else:
+            result[t] = None
+    return result
 
 
 def fetch_sectors(tickers: List[str]) -> Dict[str, str]:

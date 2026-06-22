@@ -13,6 +13,24 @@ from .models import (
 )
 
 
+def _merge_sources(sources: List[ExposureSource]) -> List[ExposureSource]:
+    """Consolidate multiple lots of the same fund into a single ExposureSource."""
+    merged: Dict[str, ExposureSource] = {}
+    for s in sources:
+        if s.fund_ticker in merged:
+            existing = merged[s.fund_ticker]
+            merged[s.fund_ticker] = ExposureSource(
+                fund_ticker=existing.fund_ticker,
+                fund_type=existing.fund_type,
+                fund_position_value=existing.fund_position_value + s.fund_position_value,
+                stock_weight_in_fund=existing.stock_weight_in_fund,  # weight is same across lots
+                stock_exposure_from_fund=existing.stock_exposure_from_fund + s.stock_exposure_from_fund,
+            )
+        else:
+            merged[s.fund_ticker] = s
+    return sorted(merged.values(), key=lambda s: s.stock_exposure_from_fund, reverse=True)
+
+
 def _calculate_exposures(
     portfolio: List[PortfolioItem],
     holdings_map: Dict[str, List[Holding]],
@@ -59,7 +77,7 @@ def _calculate_exposures(
             stock_ticker=ticker,
             total_exposure_value=total,
             percent_of_portfolio=pct,
-            sources=data["sources"],
+            sources=_merge_sources(data["sources"]),
             is_direct=data.get("is_direct", False),
         ))
 
