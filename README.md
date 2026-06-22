@@ -33,7 +33,12 @@ xattr -dr com.apple.quarantine stock-analyzer
 
 **Windows setup:**
 
-Just double-click `stock-analyzer-windows.exe` or run it from Command Prompt. Windows Defender may show a SmartScreen warning on first run — click **"More info" → "Run anyway"**.
+```
+1. Unzip stock-analyzer-*-windows.zip
+2. Open the folder
+```
+
+Double-click `stock-analyzer.exe` or run it from Command Prompt. Windows Defender may show a SmartScreen warning on first run — click **"More info" → "Run anyway"**.
 
 ---
 
@@ -72,17 +77,9 @@ FXAIX,MF,200
 | `type` | `ETF` `MF` `STOCK` `CASH` | ETF and MF trigger a fund holdings lookup |
 | `quantity` | Any number > 0 | Shares or units you hold |
 
-### 2. Run the analyzer
+### 2. Edit your portfolio file
 
-**macOS:**
-```bash
-./stock-analyzer-mac portfolio.csv
-```
-
-**Windows:**
-```
-stock-analyzer-windows.exe portfolio.csv
-```
+Replace the contents of `portfolio.csv` (or `portfolio.json`) with your own holdings.
 
 ### 3. (Optional) Enable News Briefs
 
